@@ -1,11 +1,7 @@
 // clears the content and the classes of the result element
 function clearResultElement(resultElement) {
     resultElement.innerHTML = "";
-    if (resultElement.classList.length > 0) {
-        for (let i = 0; i < resultElement.classList.length; i++) {
-            resultElement.classList.remove(resultElement.classList[i]);
-        }
-    }
+    resultElement.className = "";
 }
 
 function addClassesToResultElement(resultElement, state) {
@@ -36,6 +32,7 @@ function createRandomString(length, type) {
 
 function changeString() {
     const inputTextArea = document.getElementById("inputTextArea");
+    const changeStringRadio = document.getElementsByName("changeStringRadio");
     const changeStringResult = document.getElementById("changeStringResult");
 
     // clear the content and the classes of the result div
@@ -48,20 +45,20 @@ function changeString() {
         return;
     }
 
-    // check if lowercase or uppercase is selected in the btnradiolu radio group
-    const btnradiolu = document.getElementsByName("btnradiolu");
-    if (!btnradiolu[0].checked && !btnradiolu[1].checked) {
+    // check if a radio button is selected
+    if (!changeStringRadio[0].checked && !changeStringRadio[1].checked) {
         addClassesToResultElement(changeStringResult, "danger");
-        changeStringResult.innerHTML = "Please select lowercase or uppercase.";
+        changeStringResult.innerHTML = "Please select an option.";
         return;
     }
 
-    // edit the string
-    addClassesToResultElement(changeStringResult, "success");
-    if (btnradiolu[0].checked) {
-        changeStringResult.innerHTML = inputTextArea.value.toLowerCase();
-    } else if (btnradiolu[1].checked) {
-        changeStringResult.innerHTML = inputTextArea.value.toUpperCase();
+    // change the string
+    if (changeStringRadio[0].checked) {
+        addClassesToResultElement(changeStringResult, "success");
+        changeStringResult.textContent = inputTextArea.value.toLowerCase();
+    } else {
+        addClassesToResultElement(changeStringResult, "success");
+        changeStringResult.textContent = inputTextArea.value.toUpperCase();
     }
 
 }
