@@ -1,11 +1,28 @@
+// clears the content and the classes of the result element
 function clearResultElement(resultElement) {
-    // clear the content and the classes of the result element
     resultElement.innerHTML = "";
     if (resultElement.classList.length > 0) {
         for (let i = 0; i < resultElement.classList.length; i++) {
             resultElement.classList.remove(resultElement.classList[i]);
         }
     }
+}
+
+// creates a random string with the given length and type
+function createRandomString(length, type) {
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let resultString = "";
+    
+    if (type === "password") {
+        // concatenate special characters to the characters string
+        characters = characters.concat("!§$%&/()=?#,;.:-_");
+    }
+
+    for (let i = 0; i < length; i++) {
+        resultString += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return resultString;
 }
 
 function addClassesToResultElement(resultElement, state) {
@@ -72,6 +89,87 @@ function compareStrings() {
         addClassesToResultElement(compareStringResult, "danger");
         compareStringResult.textContent = "The strings are not equal.";
     }
+}
+
+function createUsername() {
+    const usernameLength = document.getElementById("usernameLength");
+    const usernameResult = document.getElementById("usernameResult");
+
+    // clear the username result div
+    clearResultElement(usernameResult);
+
+    // check if the username length input is empty
+    if (!usernameLength.value) {
+        addClassesToResultElement(usernameResult, "danger");
+        usernameResult.innerHTML = "Please enter a username length.";
+        return;
+    }
+
+    // check if the username length input is a number
+    if (isNaN(usernameLength.value)) {
+        addClassesToResultElement(usernameResult, "danger");
+        usernameResult.innerHTML = "Please enter a valid number.";
+        return;
+    }
+
+    // check if the username length input is a positive number
+    if (usernameLength.value < 0) {
+        addClassesToResultElement(usernameResult, "danger");
+        usernameResult.innerHTML = "Please enter a positive number.";
+        return;
+    }
+
+    // check if the username length input is greater than 999
+    if (usernameLength.value > 999) {
+        addClassesToResultElement(usernameResult, "danger");
+        usernameResult.innerHTML = "Please enter a number smaller than 1000.";
+        return;
+    }
+
+    // create the username
+    addClassesToResultElement(usernameResult, "success");
+    usernameResult.textContent = "Your username is: " + createRandomString(usernameLength.value);
+}
+
+function createPassword() {
+    const passwordLength = document.getElementById("passwordLength");
+    const passwordResult = document.getElementById("passwordResult");
+
+    // clear the password result div
+    clearResultElement(passwordResult);
+
+    // check if the password length input is empty
+    if (!passwordLength.value) {
+        addClassesToResultElement(passwordResult, "danger");
+        passwordResult.innerHTML = "Please enter a password length.";
+        return;
+    }
+
+    // check if the password length input is a number
+    if (isNaN(passwordLength.value)) {
+        addClassesToResultElement(passwordResult, "danger");
+        passwordResult.innerHTML = "Please enter a valid number.";
+        return;
+    }
+
+    // check if the password length input is a positive number
+    if (passwordLength.value < 0) {
+        addClassesToResultElement(passwordResult, "danger");
+        passwordResult.innerHTML = "Please enter a positive number.";
+        return;
+    }
+
+    // check if the password length input is greater than 999
+    if (passwordLength.value > 999) {
+        addClassesToResultElement(passwordResult, "danger");
+        passwordResult.innerHTML = "Please enter a number smaller than 1000.";
+        return;
+    }
+
+    // create the password
+    addClassesToResultElement(passwordResult, "success");
+    passwordResult.textContent = "Your password is: " + createRandomString(passwordLength.value, "password");
+
 }
 
 function checkFileHash() {

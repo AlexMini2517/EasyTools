@@ -55,14 +55,17 @@
         <h5 class="card-header">Credentials Maker</h5>
         <div class="card-body">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Username</span>
-                <input type="number" min="1" class="form-control" name="usernamelength">
+                <span class="input-group-text">Username</span>
+                <input type="number" min="1" max="999" class="form-control" id="usernameLength">
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Password</span>
-                <input type="number" min="1" class="form-control" name="passwordlength">
+                <span class="input-group-text">Password</span>
+                <input type="number" min="1" max="999" class="form-control" id="passwordLength">
             </div>
-            <button type="submit" class="btn btn-primary" name="credentials">Submit</button>
+            <button class="btn btn-primary" onclick="createUsername()">Username</button>
+            <button class="btn btn-primary" onclick="createPassword()">Password</button>
+            <div id="usernameResult"></div>
+            <div id="passwordResult"></div>
         </div>
     </div>
 
