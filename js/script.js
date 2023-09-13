@@ -8,6 +8,15 @@ function clearResultElement(resultElement) {
     }
 }
 
+function addClassesToResultElement(resultElement, state) {
+    // add classes to the result element
+    if (state === "success") {
+        resultElement.classList.add("alert", "alert-success", "mt-3");
+    } else if (state === "danger") {
+        resultElement.classList.add("alert", "alert-danger", "mt-3");
+    }
+}
+
 // creates a random string with the given length and type
 function createRandomString(length, type) {
     let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -23,15 +32,6 @@ function createRandomString(length, type) {
     }
 
     return resultString;
-}
-
-function addClassesToResultElement(resultElement, state) {
-    // add classes to the result element
-    if (state === "success") {
-        resultElement.classList.add("alert", "alert-success", "mt-3");
-    } else if (state === "danger") {
-        resultElement.classList.add("alert", "alert-danger", "mt-3");
-    }
 }
 
 function changeString() {
