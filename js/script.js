@@ -17,7 +17,7 @@ function addClassesToResultElement(resultElement, state) {
 function createRandomString(length, type) {
     let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let resultString = "";
-    
+
     if (type === "password") {
         // concatenate special characters to the characters string
         characters = characters.concat("!§$%&/()=?#,;.:-_");
@@ -170,30 +170,46 @@ function createPassword() {
 }
 
 function checkFileHash() {
-    const inputFile1 = document.getElementById("inputFile1");
-    const inputFile2 = document.getElementById("inputFile2");
+    const inputFile1 = document.getElementById("inputFile1").files[0];
+    const inputFile2 = document.getElementById("inputFile2").files[0];
     const fileHashResult = document.getElementById("fileHashResult");
 
     // clear the content and the classes of the result div
     clearResultElement(fileHashResult);
 
     // check if the files are uploaded
-    if (!inputFile1.files[0] || !inputFile2.files[0]) {
-        fileHashResult.classList.add("alert", "alert-danger", "mt-3");
+    if (!inputFile1 || !inputFile2) {
+        addClassesToResultElement(fileHashResult, "danger");
         fileHashResult.innerHTML = "Please upload both files.";
         return;
     }
 
-    // calculate the hash of both files
-    const inputFile1Hash = CryptoJS.SHA256(inputFile1.files[0]).toString();
-    const inputFile2Hash = CryptoJS.SHA256(inputFile2.files[0]).toString();
+    // read the contents of the files
+    const reader1 = new FileReader();
+    const reader2 = new FileReader();
+    reader1.onload = () => {
+        const fileContent1 = reader1.result;
+        const fileHash1 = CryptoJS.createHash("sha256")
+            .update(fileContent1, "utf8")
+            .digest("hex");
+        console.log(`File 1 hash: ${fileHash1}`);
+    };
+    reader2.onload = () => {
+        const fileContent2 = reader2.result;
+        const fileHash2 = CryptoJS.createHash("sha256")
+            .update(fileContent2, "utf8")
+            .digest("hex");
+        console.log(`File 2 hash: ${fileHash2}`);
+    };
+    reader1.readAsArrayBuffer(inputFile1);
+    reader2.readAsArrayBuffer(inputFile2);
 
     // compare the hashes
-    if (inputFile1Hash === inputFile2Hash) {
+    if (fileHash1 === fileHash2) {
         fileHashResult.classList.add("alert", "alert-success", "mt-3");
-        fileHashResult.innerHTML = "The files are identical.";
+        fileHashResult.innerHTML = "The files have the same hash.";
     } else {
         fileHashResult.classList.add("alert", "alert-danger", "mt-3");
-        fileHashResult.innerHTML = "The files are not identical.";
+        fileHashResult.innerHTML = "The files do not have the same hash.";
     }
 }
