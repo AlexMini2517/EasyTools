@@ -17,7 +17,7 @@
         <h5 class="card-header">Lowercase | Uppercase</h5>
         <div class="card-body">
             <div class="input-group mb-3">
-                <textarea class="form-control" id="inputTextArea"></textarea>
+                <textarea class="form-control" id="inputTextArea" placeholder="enter a string"></textarea>
             </div>
             <div class="btn-group">
                 <input type="radio" class="btn-check" name="changeStringRadio" id="lowercase" value="lowercase" required>
@@ -38,11 +38,11 @@
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text">String 1</span>
-                <input type="text" class="form-control" id="comparedString1" required>
+                <input type="text" class="form-control" id="comparedString1" placeholder="enter the first string" required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">String 2</span>
-                <input type="text" class="form-control" id="comparedString2" required>
+                <input type="text" class="form-control" id="comparedString2" placeholder="enter the second string" required>
             </div>
             <button class="btn btn-primary" onclick="compareStrings()">Submit</button>
             <div id="compareStringResult"></div>
@@ -56,11 +56,11 @@
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text">Username</span>
-                <input type="number" min="1" max="999" class="form-control" id="usernameLength">
+                <input type="number" min="1" max="999" class="form-control" id="usernameLength" placeholder="enter the length of the username">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Password</span>
-                <input type="number" min="1" max="999" class="form-control" id="passwordLength">
+                <input type="number" min="1" max="999" class="form-control" id="passwordLength" placeholder="enter the length of the password">
             </div>
             <button class="btn btn-primary" onclick="createUsername()">Username</button>
             <button class="btn btn-primary" onclick="createPassword()">Password</button>
