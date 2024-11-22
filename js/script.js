@@ -11,6 +11,14 @@ function createCopyButton(textToCopy) {
 
     copyButton.addEventListener('click', async () => {
         await navigator.clipboard.writeText(textToCopy);
+
+        // Cambia l'icona
+        icon.className = "bi-clipboard-check-fill"
+
+        // Assicurati che l'icona ritorni all'originale dopo 2 secondi
+        setTimeout(() => {
+            icon.className = "bi bi-clipboard";
+        }, 1000);
     });
 
     return copyButton;
