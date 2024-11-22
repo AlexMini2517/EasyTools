@@ -1,3 +1,21 @@
+function createCopyButton(textToCopy) {
+    const copyButton = document.createElement("button");
+    copyButton.className = "btn btn-secondary";
+    copyButton.id = "copyButton";
+
+    const icon = document.createElement("i");
+    icon.className = "bi bi-clipboard";
+    icon.id = "themeIcon";
+
+    copyButton.appendChild(icon);
+
+    copyButton.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(textToCopy);
+    });
+
+    return copyButton;
+}
+
 // clears the content and the classes of the result element
 function clearResultElement(resultElement) {
     resultElement.innerHTML = "";
@@ -88,85 +106,43 @@ function compareStrings() {
     }
 }
 
-function createUsername() {
-    const usernameLength = document.getElementById("usernameLength");
-    const usernameResult = document.getElementById("usernameResult");
+function createRandom(type) {
+    const lengthInput = document.getElementById(type + "Length");
+    const resultElement = document.getElementById(type + "Result");
 
-    // clear the username result div
-    clearResultElement(usernameResult);
+    // clear the result div
+    clearResultElement(resultElement);
 
-    // check if the username length input is empty
-    if (!usernameLength.value) {
-        addClassesToResultElement(usernameResult, "danger");
-        usernameResult.innerHTML = "Please enter a username length.";
+    // validate input
+    if (!lengthInput.value) {
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.innerHTML = "Please enter a " + type + " length.";
         return;
     }
 
-    // check if the username length input is a number
-    if (isNaN(usernameLength.value)) {
-        addClassesToResultElement(usernameResult, "danger");
-        usernameResult.innerHTML = "Please enter a valid number.";
+    if (isNaN(lengthInput.value)) {
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.innerHTML = "Please enter a valid number for the " + type + " length.";
         return;
     }
 
-    // check if the username length input is a positive number
-    if (usernameLength.value < 0) {
-        addClassesToResultElement(usernameResult, "danger");
-        usernameResult.innerHTML = "Please enter a positive number.";
+    if (lengthInput.value <= 0) {
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.innerHTML = "Please enter a positive number for the " + type + " length.";
         return;
     }
 
-    // check if the username length input is greater than 999
-    if (usernameLength.value > 999) {
-        addClassesToResultElement(usernameResult, "danger");
-        usernameResult.innerHTML = "Please enter a number smaller than 1000.";
+    if (lengthInput.value > 999) {
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.innerHTML = "Please enter a number smaller than 1000 for the " + type + " length.";
         return;
     }
 
-    // create the username
-    addClassesToResultElement(usernameResult, "success");
-    usernameResult.textContent = "Your username is: " + createRandomString(usernameLength.value);
-}
-
-function createPassword() {
-    const passwordLength = document.getElementById("passwordLength");
-    const passwordResult = document.getElementById("passwordResult");
-
-    // clear the password result div
-    clearResultElement(passwordResult);
-
-    // check if the password length input is empty
-    if (!passwordLength.value) {
-        addClassesToResultElement(passwordResult, "danger");
-        passwordResult.innerHTML = "Please enter a password length.";
-        return;
-    }
-
-    // check if the password length input is a number
-    if (isNaN(passwordLength.value)) {
-        addClassesToResultElement(passwordResult, "danger");
-        passwordResult.innerHTML = "Please enter a valid number.";
-        return;
-    }
-
-    // check if the password length input is a positive number
-    if (passwordLength.value < 0) {
-        addClassesToResultElement(passwordResult, "danger");
-        passwordResult.innerHTML = "Please enter a positive number.";
-        return;
-    }
-
-    // check if the password length input is greater than 999
-    if (passwordLength.value > 999) {
-        addClassesToResultElement(passwordResult, "danger");
-        passwordResult.innerHTML = "Please enter a number smaller than 1000.";
-        return;
-    }
-
-    // create the password
-    addClassesToResultElement(passwordResult, "success");
-    passwordResult.textContent = "Your password is: " + createRandomString(passwordLength.value, "password");
-
+    const randomString = createRandomString(lengthInput.value, type === "password" ? "password" : "username");
+    const copyButton = createCopyButton(randomString);
+    resultElement.appendChild(copyButton);
+    resultElement.appendChild(document.createTextNode(" Your " + type + " is: " + randomString));
+    addClassesToResultElement(resultElement, "success");
 }
 
 function checkFileHash() {
@@ -192,14 +168,14 @@ function checkFileHash() {
         const fileHash1 = CryptoJS.createHash("sha256")
             .update(fileContent1, "utf8")
             .digest("hex");
-        console.log(`File 1 hash: ${fileHash1}`);
+        console.log("File 1 hash: ${fileHash1}");
     };
     reader2.onload = () => {
         const fileContent2 = reader2.result;
         const fileHash2 = CryptoJS.createHash("sha256")
             .update(fileContent2, "utf8")
             .digest("hex");
-        console.log(`File 2 hash: ${fileHash2}`);
+        console.log("File 2 hash: ${fileHash2}");
     };
     reader1.readAsArrayBuffer(inputFile1);
     reader2.readAsArrayBuffer(inputFile2);
