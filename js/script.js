@@ -60,6 +60,7 @@ function changeString() {
     const inputTextArea = document.getElementById("inputTextArea");
     const changeStringRadio = document.getElementsByName("changeStringRadio");
     const changeStringResult = document.getElementById("changeStringResult");
+    var text;
 
     // clear the content and the classes of the result div
     clearResultElement(changeStringResult);
@@ -67,26 +68,29 @@ function changeString() {
     // check if the input text area is empty
     if (!inputTextArea.value) {
         addClassesToResultElement(changeStringResult, "danger");
-        changeStringResult.innerHTML = "Please enter a string.";
+        changeStringResult.textContent = "Please enter a string.";
         return;
     }
 
     // check if a radio button is selected
     if (!changeStringRadio[0].checked && !changeStringRadio[1].checked) {
         addClassesToResultElement(changeStringResult, "danger");
-        changeStringResult.innerHTML = "Please select an option.";
+        changeStringResult.textContent = "Please select an option.";
         return;
     }
 
     // change the string
     if (changeStringRadio[0].checked) {
         addClassesToResultElement(changeStringResult, "success");
-        changeStringResult.textContent = inputTextArea.value.toLowerCase();
+        text = inputTextArea.value.toLowerCase();
     } else {
         addClassesToResultElement(changeStringResult, "success");
-        changeStringResult.textContent = inputTextArea.value.toUpperCase();
+        text = inputTextArea.value.toUpperCase();
     }
 
+    const copyButton = createCopyButton(text);
+    changeStringResult.appendChild(copyButton);
+    changeStringResult.appendChild(document.createTextNode(" "+text));
 }
 
 function compareStrings() {
@@ -100,7 +104,7 @@ function compareStrings() {
     // check if the input text areas are empty
     if (!comparedString1.value || !comparedString2.value) {
         addClassesToResultElement(compareStringResult, "danger");
-        compareStringResult.innerHTML = "Please enter both strings.";
+        compareStringResult.textContent = "Please enter both strings.";
         return;
     }
 
