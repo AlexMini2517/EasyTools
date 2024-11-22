@@ -213,3 +213,30 @@ function checkFileHash() {
         fileHashResult.innerHTML = "The files do not have the same hash.";
     }
 }
+
+function toggleTheme() {
+    const body = document.body;
+    const button = document.getElementById("themeBtn");
+    const isLightMode = body.getAttribute("data-bs-theme") === "";
+
+    // Set the new theme
+    body.setAttribute("data-bs-theme", isLightMode ? "dark" : "");
+
+    // Set the button classes and content based on the theme
+    const buttonClass = isLightMode ? "btn btn-light" : "btn btn-dark";
+    const iconClass = isLightMode ? "bi bi-lightbulb-fill" : "bi bi-lightbulb-off";
+    const buttonText = isLightMode ? " Enable Light Mode" : " Enable Dark Mode";
+
+    // Update button appearance
+    button.className = buttonClass;
+    button.textContent = ""; // Clear existing content
+
+    // Create and append the icon
+    const icon = document.createElement("i");
+    icon.className = iconClass;
+    icon.id = "themeIcon";
+    button.appendChild(icon);
+
+    // Create and append the text
+    button.appendChild(document.createTextNode(buttonText));
+}
