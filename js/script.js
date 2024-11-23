@@ -59,62 +59,62 @@ function createRandomString(length, type) {
 function changeString() {
     const inputTextArea = document.getElementById("inputTextArea");
     const changeStringRadio = document.getElementsByName("changeStringRadio");
-    const changeStringResult = document.getElementById("changeStringResult");
+    const resultElement = document.getElementById("changeStringResult");
     var text;
 
     // clear the content and the classes of the result div
-    clearResultElement(changeStringResult);
+    clearResultElement(resultElement);
 
     // check if the input text area is empty
     if (!inputTextArea.value) {
-        addClassesToResultElement(changeStringResult, "danger");
-        changeStringResult.textContent = "Please enter a string.";
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.textContent = "Please enter a string.";
         return;
     }
 
     // check if a radio button is selected
     if (!changeStringRadio[0].checked && !changeStringRadio[1].checked) {
-        addClassesToResultElement(changeStringResult, "danger");
-        changeStringResult.textContent = "Please select an option.";
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.textContent = "Please select an option.";
         return;
     }
 
     // change the string
     if (changeStringRadio[0].checked) {
-        addClassesToResultElement(changeStringResult, "success");
+        addClassesToResultElement(resultElement, "success");
         text = inputTextArea.value.toLowerCase();
     } else {
-        addClassesToResultElement(changeStringResult, "success");
+        addClassesToResultElement(resultElement, "success");
         text = inputTextArea.value.toUpperCase();
     }
 
     const copyButton = createCopyButton(text);
-    changeStringResult.appendChild(copyButton);
-    changeStringResult.appendChild(document.createTextNode(" "+text));
+    resultElement.appendChild(copyButton);
+    resultElement.appendChild(document.createTextNode(" "+text));
 }
 
 function compareStrings() {
     const comparedString1 = document.getElementById("comparedString1");
     const comparedString2 = document.getElementById("comparedString2");
-    const compareStringResult = document.getElementById("compareStringResult");
+    const resultElement = document.getElementById("compareStringResult");
 
     // clear the content and the classes of the result div
-    clearResultElement(compareStringResult);
+    clearResultElement(resultElement);
 
     // check if the input text areas are empty
     if (!comparedString1.value || !comparedString2.value) {
-        addClassesToResultElement(compareStringResult, "danger");
-        compareStringResult.textContent = "Please enter both strings.";
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.textContent = "Please enter both strings.";
         return;
     }
 
     // compare the strings
     if (comparedString1.value === comparedString2.value) {
-        addClassesToResultElement(compareStringResult, "success");
-        compareStringResult.textContent = "The strings are equal.";
+        addClassesToResultElement(resultElement, "success");
+        resultElement.textContent = "The strings are equal.";
     } else {
-        addClassesToResultElement(compareStringResult, "danger");
-        compareStringResult.textContent = "The strings are not equal.";
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.textContent = "The strings are not equal.";
     }
 }
 
@@ -157,48 +157,55 @@ function createRandom(type) {
     addClassesToResultElement(resultElement, "success");
 }
 
-function checkFileHash() {
-    const inputFile1 = document.getElementById("inputFile1").files[0];
-    const inputFile2 = document.getElementById("inputFile2").files[0];
-    const fileHashResult = document.getElementById("fileHashResult");
+// Funzione per calcolare l'hash di un file
+async function calculateFileHash(file) {
+    if (!file) return null;
 
-    // clear the content and the classes of the result div
-    clearResultElement(fileHashResult);
+    // Leggi il contenuto del file
+    const arrayBuffer = await file.arrayBuffer();
 
-    // check if the files are uploaded
-    if (!inputFile1 || !inputFile2) {
-        addClassesToResultElement(fileHashResult, "danger");
-        fileHashResult.innerHTML = "Please upload both files.";
+    // Calcola l'hash con SHA-256
+    const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+
+    // Converti l'hash in una stringa esadecimale
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+
+// Funzione per controllare gli hash dei file
+async function checkFileHash() {
+    const resultElement = document.getElementById('fileHashResult');
+    // Ottieni i file dagli input
+    const fileInput1 = document.getElementById('inputFile1');
+    const fileInput2 = document.getElementById('inputFile2');
+
+    const file1 = fileInput1.files[0];
+    const file2 = fileInput2.files[0];
+
+    if (!file1 || !file2) {
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.innerText = "Please select two files to compare.";
         return;
     }
 
-    // read the contents of the files
-    const reader1 = new FileReader();
-    const reader2 = new FileReader();
-    reader1.onload = () => {
-        const fileContent1 = reader1.result;
-        const fileHash1 = CryptoJS.createHash("sha256")
-            .update(fileContent1, "utf8")
-            .digest("hex");
-        console.log("File 1 hash: ${fileHash1}");
-    };
-    reader2.onload = () => {
-        const fileContent2 = reader2.result;
-        const fileHash2 = CryptoJS.createHash("sha256")
-            .update(fileContent2, "utf8")
-            .digest("hex");
-        console.log("File 2 hash: ${fileHash2}");
-    };
-    reader1.readAsArrayBuffer(inputFile1);
-    reader2.readAsArrayBuffer(inputFile2);
+    try {
+        // Calcola gli hash
+        const hash1 = await calculateFileHash(file1);
+        const hash2 = await calculateFileHash(file2);
 
-    // compare the hashes
-    if (fileHash1 === fileHash2) {
-        fileHashResult.classList.add("alert", "alert-success", "mt-3");
-        fileHashResult.innerHTML = "The files have the same hash.";
-    } else {
-        fileHashResult.classList.add("alert", "alert-danger", "mt-3");
-        fileHashResult.innerHTML = "The files do not have the same hash.";
+        // Confronta gli hash
+        const result = hash1 === hash2 ? "The hashes are equal." : "The hashes are not equal.";
+        result === "The hashes are equal." ? addClassesToResultElement(resultElement, "success") : addClassesToResultElement(resultElement, "danger");
+
+        // Mostra il risultato
+        resultElement.innerText = `Hash File 1: ${hash1}
+            Hash File 2: ${hash2}
+            ${result}
+        `;
+    } catch (error) {
+        addClassesToResultElement(resultElement, "danger");
+        resultElement.innerText = "An error occurred while calculating the hash.";
     }
 }
 
