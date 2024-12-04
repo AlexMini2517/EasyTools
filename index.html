@@ -26,12 +26,10 @@
                 <textarea class="form-control" id="inputTextArea" placeholder="enter a string"></textarea>
             </div>
             <div class="btn-group mb-3">
-                <input type="radio" class="btn-check" name="changeStringRadio" id="lowercase" value="lowercase"
-                    required>
+                <input type="radio" class="btn-check" name="changeStringRadio" id="lowercase" value="lowercase" required>
                 <label class="btn btn-outline-primary" for="lowercase">lowercase</label>
 
-                <input type="radio" class="btn-check" name="changeStringRadio" id="uppercase" value="uppercase"
-                    required>
+                <input type="radio" class="btn-check" name="changeStringRadio" id="uppercase" value="uppercase" required>
                 <label class="btn btn-outline-primary" for="uppercase">UPPERCASE</label>
             </div>
             <div class="input-group">
@@ -48,13 +46,11 @@
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text">String 1</span>
-                <input type="text" class="form-control" id="comparedString1" placeholder="enter the first string"
-                    required>
+                <input type="text" class="form-control" id="comparedString1" placeholder="enter the first string" required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">String 2</span>
-                <input type="text" class="form-control" id="comparedString2" placeholder="enter the second string"
-                    required>
+                <input type="text" class="form-control" id="comparedString2" placeholder="enter the second string" required>
             </div>
             <button class="btn btn-primary" onclick="compareStrings()">Submit</button>
             <div id="compareStringResult"></div>
@@ -68,13 +64,11 @@
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text">Username</span>
-                <input type="number" min="1" max="999" class="form-control" id="usernameLength"
-                    placeholder="enter the length of the username">
+                <input type="number" min="1" max="999" class="form-control" id="usernameLength" placeholder="enter the length of the username">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Password</span>
-                <input type="number" min="1" max="999" class="form-control" id="passwordLength"
-                    placeholder="enter the length of the password">
+                <input type="number" min="1" max="999" class="form-control" id="passwordLength" placeholder="enter the length of the password">
             </div>
             <button class="btn btn-primary" onclick="createRandom('username')">Username</button>
             <button class="btn btn-primary" onclick="createRandom('password')">Password</button>
@@ -96,6 +90,28 @@
             </div>
             <button class="btn btn-primary" onclick="checkFileHash()">Submit</button>
             <div id="fileHashResult"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="card">
+        <h5 class="card-header">Crypto Calculator</h5>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Initial Crypto Price (€)</span>
+                <input type="number" class="form-control" id="cryptoInitialPrice" placeholder="enter the initial price" min="0">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Amount Invested (€)</span>
+                <input type="number" class="form-control" id="cryptoAmountSpent" placeholder="enter the amount of money you invested" min="0">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Current Crypto Price (€)</span>
+                <input type="number" class="form-control" id="cryptoCurrentPrice" placeholder="enter the current price" min="0">
+            </div>
+            <button class="btn btn-primary" onclick="calculateCryptoValue()">Calcola</button>
+            <div id="cryptoResult" class="mt-3"></div>
         </div>
     </div>
 

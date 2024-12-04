@@ -90,7 +90,7 @@ function changeString() {
 
     const copyButton = createCopyButton(text);
     resultElement.appendChild(copyButton);
-    resultElement.appendChild(document.createTextNode(" "+text));
+    resultElement.appendChild(document.createTextNode(" " + text));
 }
 
 function compareStrings() {
@@ -234,4 +234,29 @@ function toggleTheme() {
 
     // Create and append the text
     button.appendChild(document.createTextNode(buttonText));
+}
+
+function calculateCryptoValue() {
+    // Recupera i valori dagli input
+    const initialPrice = parseFloat(document.getElementById("cryptoInitialPrice").value);
+    const amountSpent = parseFloat(document.getElementById("cryptoAmountSpent").value);
+    const currentPrice = parseFloat(document.getElementById("cryptoCurrentPrice").value);
+
+    // Controlla se i valori sono validi
+    if (isNaN(initialPrice) || isNaN(amountSpent) || isNaN(currentPrice) || initialPrice <= 0 || amountSpent <= 0 || currentPrice <= 0) {
+        document.getElementById("cryptoResult").innerHTML = `<div class="alert alert-danger">Please enter valid numbers.</div>`;
+        return;
+    }
+
+    // Calcola le unità acquistate e il valore attuale
+    const unitsPurchased = amountSpent / initialPrice;
+    const currentValue = unitsPurchased * currentPrice;
+    const profit = currentValue - amountSpent;
+
+    // Mostra il risultato
+    document.getElementById("cryptoResult").innerHTML = `
+        <div class="alert alert-success">
+            You purchased <strong>${unitsPurchased.toFixed(2)}</strong> units. The current value is <strong>€${currentValue.toFixed(2)}</strong>. Your profit is <strong>€${profit.toFixed(2)}</strong>.
+        </div>
+    `;
 }
