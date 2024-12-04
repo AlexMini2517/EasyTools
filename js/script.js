@@ -256,7 +256,9 @@ function calculateCryptoValue() {
     // Mostra il risultato
     document.getElementById("cryptoResult").innerHTML = `
         <div class="alert alert-success">
-            You purchased <strong>${unitsPurchased.toFixed(2)}</strong> units. The current value is <strong>€${currentValue.toFixed(2)}</strong>. Your profit is <strong>€${profit.toFixed(2)}</strong>.
+            You purchased <strong>${unitsPurchased.toFixed(2)}</strong> units.
+            Your investment info: from <strong>€${amountSpent.toFixed(2)}</strong> to <strong>€${currentValue.toFixed(2)}</strong>.
+            Your profit is <strong>€${profit.toFixed(2)}</strong>.
         </div>
     `;
 }
