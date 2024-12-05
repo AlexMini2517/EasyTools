@@ -276,11 +276,13 @@ function calculateMarketCap() {
     const growthFactor = marketCapCurrent / marketCapInitial;
     const finalValue = amountInvested * growthFactor;
     const profit = finalValue - amountInvested;
+    const multiplier = (marketCapCurrent / marketCapInitial).toFixed(2);
 
     document.getElementById("marketCapResult").innerHTML = `
         <div class="alert alert-success">
             Your investment info: from <strong>€${formatCurrency(amountInvested)}</strong> to <strong>€${formatCurrency(finalValue)}</strong>.<br>
-            Your profit is: <strong>€${formatCurrency(profit)}</strong>.
+            Your profit is: <strong>€${formatCurrency(profit)}</strong>.<br>
+            Your multiplier is: <strong>${multiplier}x</strong>.
         </div>
     `;
 
