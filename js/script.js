@@ -256,9 +256,38 @@ function calculateCryptoValue() {
     // Mostra il risultato
     document.getElementById("cryptoResult").innerHTML = `
         <div class="alert alert-success">
-            You purchased <strong>${unitsPurchased.toFixed(2)}</strong> units.
-            Your investment info: from <strong>€${amountSpent.toFixed(2)}</strong> to <strong>€${currentValue.toFixed(2)}</strong>.
-            Your profit is <strong>€${profit.toFixed(2)}</strong>.
+            You purchased <strong>${unitsPurchased}</strong> units.<br>
+            Your investment info: from <strong>€${formatCurrency(amountSpent)}</strong> to <strong>€${formatCurrency(currentValue)}</strong>.<br>
+            Your profit is <strong>€${formatCurrency(profit)}</strong>.
         </div>
     `;
+}
+
+function calculateMarketCap() {
+    const amountInvested = parseFloat(document.getElementById("marketCapAmountInvested").value);
+    const marketCapInitial = parseFloat(document.getElementById("marketCapInitial").value);
+    const marketCapCurrent = parseFloat(document.getElementById("marketCapCurrent").value);
+
+    if (isNaN(amountInvested) || isNaN(marketCapInitial) || isNaN(marketCapCurrent) || marketCapInitial <= 0) {
+        document.getElementById("marketCapResult").innerHTML = `<div class="alert alert-danger">Please enter valid positive numbers.</div>`;
+        return;
+    }
+
+    const growthFactor = marketCapCurrent / marketCapInitial;
+    const finalValue = amountInvested * growthFactor;
+    const profit = finalValue - amountInvested;
+
+    document.getElementById("marketCapResult").innerHTML = `
+        <div class="alert alert-success">
+            Your investment info: from <strong>€${formatCurrency(amountInvested)}</strong> to <strong>€${formatCurrency(finalValue)}</strong>.<br>
+            Your profit is: <strong>€${formatCurrency(profit)}</strong>.
+        </div>
+    `;
+
+    // toLocaleString('en') -> "1,234,567.89"
+    // replace(/,/g, "'") -> "1'234'567.89"
+}
+
+function formatCurrency(value) {
+    return Number(value.toFixed(2)).toLocaleString('en').replace(/,/g, "'");
 }
