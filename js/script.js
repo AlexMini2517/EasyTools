@@ -250,16 +250,13 @@ function calculateCryptoValue() {
 
     // Calcola le unità acquistate e il valore attuale
     const unitsPurchased = amountSpent / initialPrice;
-    const currentValue = unitsPurchased * currentPrice;
-    const profit = currentValue - amountSpent;
-    const multiplier = (currentValue / amountSpent).toFixed(2);
-    const percentageChange = ((profit / amountSpent) * 100).toFixed(2);
+    const { finalValue, profit, multiplier, percentageChange } = calculateInvestment(amountSpent, initialPrice, currentPrice);
 
     // Mostra il risultato
     document.getElementById("cryptoResult").innerHTML = `
         <div class="alert alert-success">
-            You purchased <strong>${unitsPurchased}</strong> units.<br>
-            Your investment info: from <strong>€${formatCurrency(amountSpent)}</strong> to <strong>€${formatCurrency(currentValue)}</strong>.<br>
+            You purchased <strong>${unitsPurchased.toFixed(2)}</strong> units.<br>
+            Your investment info: from <strong>€${formatCurrency(amountSpent)}</strong> to <strong>€${formatCurrency(finalValue)}</strong>.<br>
             Your profit is <strong>€${formatCurrency(profit)}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
         </div>
     `;
@@ -276,11 +273,7 @@ function calculateMarketCap() {
         return;
     }
 
-    const growthFactor = marketCapCurrent / marketCapInitial;
-    const finalValue = amountInvested * growthFactor;
-    const profit = finalValue - amountInvested;
-    const multiplier = (marketCapCurrent / marketCapInitial).toFixed(2);
-    const percentageChange = ((profit / amountInvested) * 100).toFixed(2);
+    const { finalValue, profit, multiplier, percentageChange } = calculateInvestment(amountInvested, marketCapInitial, marketCapCurrent);
 
     document.getElementById("marketCapResult").innerHTML = `
         <div class="alert alert-success">
@@ -294,5 +287,14 @@ function calculateMarketCap() {
 }
 
 function formatCurrency(value) {
-    return Number(value.toFixed(2)).toLocaleString('en').replace(/,/g, "'");
+    return Number(value.toFixed(2)).toLocaleString('en', { minimumFractionDigits: 2 }).replace(/,/g, "'");
+}
+
+function calculateInvestment(initialAmount, initialValue, currentValue) {
+    const growthFactor = currentValue / initialValue;
+    const finalValue = initialAmount * growthFactor;
+    const profit = finalValue - initialAmount;
+    const multiplier = growthFactor.toFixed(2);
+    const percentageChange = ((profit / initialAmount) * 100).toFixed(2);
+    return { finalValue, profit, multiplier, percentageChange };
 }
