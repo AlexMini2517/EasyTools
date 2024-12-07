@@ -252,15 +252,18 @@ function calculateCryptoValue() {
     const unitsPurchased = amountSpent / initialPrice;
     const currentValue = unitsPurchased * currentPrice;
     const profit = currentValue - amountSpent;
+    const multiplier = (currentValue / amountSpent).toFixed(2);
+    const percentageChange = ((profit / amountSpent) * 100).toFixed(2);
 
     // Mostra il risultato
     document.getElementById("cryptoResult").innerHTML = `
         <div class="alert alert-success">
             You purchased <strong>${unitsPurchased}</strong> units.<br>
             Your investment info: from <strong>€${formatCurrency(amountSpent)}</strong> to <strong>€${formatCurrency(currentValue)}</strong>.<br>
-            Your profit is <strong>€${formatCurrency(profit)}</strong>.
+            Your profit is <strong>€${formatCurrency(profit)}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
         </div>
     `;
+
 }
 
 function calculateMarketCap() {
@@ -277,12 +280,12 @@ function calculateMarketCap() {
     const finalValue = amountInvested * growthFactor;
     const profit = finalValue - amountInvested;
     const multiplier = (marketCapCurrent / marketCapInitial).toFixed(2);
+    const percentageChange = ((profit / amountInvested) * 100).toFixed(2);
 
     document.getElementById("marketCapResult").innerHTML = `
         <div class="alert alert-success">
             Your investment info: from <strong>€${formatCurrency(amountInvested)}</strong> to <strong>€${formatCurrency(finalValue)}</strong>.<br>
-            Your profit is: <strong>€${formatCurrency(profit)}</strong>.<br>
-            Your multiplier is: <strong>${multiplier}x</strong>.
+            Your profit is: <strong>€${formatCurrency(profit)}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
         </div>
     `;
 
