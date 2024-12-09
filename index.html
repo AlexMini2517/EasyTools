@@ -98,18 +98,42 @@
     <div class="card">
         <h5 class="card-header">Crypto Calculator</h5>
         <div class="card-body">
-            <div class="input-group mb-3">
-                <span class="input-group-text">Amount Invested (€)</span>
-                <input type="number" class="form-control" id="cryptoAmountSpent" placeholder="enter the amount of money you invested" min="0">
+            <div class="row g-2 mb-3">
+                <div class="col-auto">
+                    <label for="cryptoAmountSpent" class="col-form-label">Amount Invested:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control" id="cryptoAmountSpent" min="0">
+                    </div>
+                </div>
             </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Initial Crypto Price (€)</span>
-                <input type="number" class="form-control" id="cryptoInitialPrice" placeholder="enter the initial price" min="0">
+
+            <div class="row g-2 mb-3">
+                <div class="col-auto">
+                    <label for="cryptoInitialPrice" class="col-form-label">Initial Crypto Price:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control" id="cryptoInitialPrice" min="0">
+                    </div>
+                </div>
             </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Current Crypto Price (€)</span>
-                <input type="number" class="form-control" id="cryptoCurrentPrice" placeholder="enter the current price" min="0">
+
+            <div class="row g-2 mb-3">
+                <div class="col-auto">
+                    <label for="cryptoCurrentPrice" class="col-form-label">Current Crypto Price:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control" id="cryptoCurrentPrice" min="0">
+                    </div>
+                </div>
             </div>
+
             <button class="btn btn-primary" onclick="calculateCryptoValue()">Calcola</button>
             <div id="cryptoResult" class="mt-3"></div>
         </div>
@@ -120,18 +144,42 @@
     <div class="card">
         <h5 class="card-header">Crypto Market Cap Converter</h5>
         <div class="card-body">
-            <div class="input-group mb-3">
-                <span class="input-group-text">Amount Invested (€)</span>
-                <input type="number" class="form-control" id="marketCapAmountInvested" placeholder="Enter the amount invested" min="0">
+            <div class="row g-2 mb-3">
+                <div class="col-auto">
+                    <label for="marketCapAmountInvested" class="col-form-label">Amount Invested:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control" id="marketCapAmountInvested" min="0">
+                    </div>
+                </div>
             </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Market Cap at Investment</span>
-                <input type="number" class="form-control" id="marketCapInitial" placeholder="Enter the initial market cap" min="0">
+
+            <div class="row g-2 mb-3">
+                <div class="col-auto">
+                    <label for="marketCapInitial" class="col-form-label">Market Cap at Investment:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control" id="marketCapInitial" min="0">
+                    </div>
+                </div>
             </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Current Market Cap</span>
-                <input type="number" class="form-control" id="marketCapCurrent" placeholder="Enter the current market cap" min="0">
+
+            <div class="row g-2 mb-3">
+                <div class="col-auto">
+                    <label for="marketCapCurrent" class="col-form-label">Current Market Cap:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">€</span>
+                        <input type="number" class="form-control" id="marketCapCurrent" min="0">
+                    </div>
+                </div>
             </div>
+
             <button class="btn btn-primary" onclick="calculateMarketCap()">Calculate</button>
             <div id="marketCapResult" class="mt-3"></div>
         </div>
