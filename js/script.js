@@ -251,13 +251,14 @@ function calculateCryptoValue() {
     // Calcola le unità acquistate e il valore attuale
     const unitsPurchased = amountSpent / initialPrice;
     const { finalValue, profit, multiplier, percentageChange } = calculateInvestment(amountSpent, initialPrice, currentPrice);
+    const alertClass = profit >= 0 ? "alert alert-success" : "alert alert-danger";
 
     // Mostra il risultato
     document.getElementById("cryptoResult").innerHTML = `
-        <div class="alert alert-success">
+        <div class="${alertClass}">
             You purchased <strong>${unitsPurchased.toFixed(2)}</strong> units.<br>
             Your investment info: from <strong>€${formatCurrency(amountSpent)}</strong> to <strong>€${formatCurrency(finalValue)}</strong>.<br>
-            Your profit is <strong>€${formatCurrency(profit)}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
+            Your profit is: <strong>${(profit >= 0 ? '+' : '-')}€${formatCurrency(Math.abs(profit))}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
         </div>
     `;
 
@@ -274,11 +275,12 @@ function calculateMarketCap() {
     }
 
     const { finalValue, profit, multiplier, percentageChange } = calculateInvestment(amountInvested, marketCapInitial, marketCapCurrent);
+    const alertClass = profit >= 0 ? "alert alert-success" : "alert alert-danger";
 
     document.getElementById("marketCapResult").innerHTML = `
-        <div class="alert alert-success">
+        <div class="${alertClass}">
             Your investment info: from <strong>€${formatCurrency(amountInvested)}</strong> to <strong>€${formatCurrency(finalValue)}</strong>.<br>
-            Your profit is: <strong>€${formatCurrency(profit)}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
+            Your profit is: <strong>${(profit >= 0 ? '+' : '-')}€${formatCurrency(Math.abs(profit))}</strong> (<strong>${percentageChange > 0 ? '+' : ''}${percentageChange}%</strong>) [<strong>${multiplier}x</strong>].
         </div>
     `;
 
