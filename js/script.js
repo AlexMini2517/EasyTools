@@ -10,15 +10,29 @@ function createCopyButton(textToCopy) {
     copyButton.appendChild(icon);
 
     copyButton.addEventListener('click', async () => {
-        await navigator.clipboard.writeText(textToCopy);
+        try {
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(textToCopy);
+            } else {
+                // Fallback per browser che non supportano navigator.clipboard
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
 
-        // Cambia l'icona
-        icon.className = "bi-clipboard-check-fill"
+            // Cambia l'icona
+            icon.className = "bi-clipboard-check-fill";
 
-        // Assicurati che l'icona ritorni all'originale dopo 2 secondi
-        setTimeout(() => {
-            icon.className = "bi bi-clipboard";
-        }, 1000);
+            // Assicurati che l'icona ritorni all'originale dopo 2 secondi
+            setTimeout(() => {
+                icon.className = "bi bi-clipboard";
+            }, 1000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
     });
 
     return copyButton;
